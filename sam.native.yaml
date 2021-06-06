@@ -1,0 +1,39 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Book Microservice
+
+Globals:
+  Function:
+    Timeout: 20
+
+Resources:
+  BookFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: build/libs/micronaut-demo-0.1-lambda.zip
+      Handler: micronaut.demo.StreamLambdaHandler::handleRequest
+      Runtime: provided
+      MemorySize: 512
+      Events:
+        CreateBook:
+          Type: Api
+          Properties:
+            Path: /
+            Method: post
+        GetBooks:
+          Type: Api
+          Properties:
+            Path: /
+            Method: get
+
+Outputs:
+  BookApi:
+    Description: "API Gateway endpoint URL for Prod stage for Gender function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/v1/book/"
+  BookFunction:
+    Description: "Gender Lambda Function ARN"
+    Value: !GetAtt BookFunction.Arn
+  BookFunctionIamRole:
+    Description: "Implicit IAM Role created for Gender function"
+    Value: !GetAtt BookFunctionRole.Arn

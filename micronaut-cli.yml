@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: micronaut.demo
+testFramework: junit
+sourceLanguage: kotlin
+buildTool: gradle
+features: [annotation-api, app-name, aws-lambda, aws-lambda-custom-runtime, aws-v2-sdk, graalvm, gradle, http-client, junit, kotlin, log4j2, logback, readme, shade, yaml]
