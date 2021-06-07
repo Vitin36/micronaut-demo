@@ -26,7 +26,7 @@ class BookRequestHandlerTest {
                 .build()
         val lambdaContext: Context = MockLambdaContext()
         val response = handler.handleRequest(request, lambdaContext)
-        Assertions.assertEquals(response.statusCode, HttpStatus.OK.code)
+        Assertions.assertEquals(response.statusCode, HttpStatus.NOT_FOUND.code)
         val bookSaved: BookSaved = objectMapper.readValue(response.body, BookSaved::class.java)
         Assertions.assertNotNull(bookSaved)
         Assertions.assertEquals(bookSaved.name, book.name)

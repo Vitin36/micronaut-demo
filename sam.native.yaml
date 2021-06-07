@@ -11,7 +11,7 @@ Resources:
   BookFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: build/libs/micronaut-demo-0.1-lambda.zip
+      CodeUri: build/libs/application-lambda.zip
       Handler: micronaut.demo.StreamLambdaHandler::handleRequest
       Runtime: provided
       MemorySize: 512
