@@ -91,7 +91,7 @@ scmVersion {
     ignoreUncommittedChanges = false
 
     checks {
-        aheadOfRemote = false
+        aheadOfRemote = true
     }
 
     nextVersion {
