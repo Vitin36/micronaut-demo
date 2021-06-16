@@ -95,10 +95,10 @@ scmVersion {
         separator = '-' // separator between version and suffix
     }
 
-//    hooks {
-//        pre 'fileUpdate', [file: 'README.md', pattern: {v,p -> /(version.) $v/}, replacement: {v, p -> "\$1 $v"}]
-//        pre 'commit'
-//    }
+    hooks {
+        pre 'fileUpdate', [file: 'gradle.properties', pattern: {v,p -> /version=$v-SNAPSHOT/}, replacement: {v, p -> "\$1$v $p"}]
+        pre 'commit'
+    }
 }
 
 publishing {
