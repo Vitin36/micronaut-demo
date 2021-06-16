@@ -100,7 +100,7 @@ scmVersion {
     }
 
     hooks {
-        pre 'fileUpdate', [file: 'gradle.properties', pattern: {v,p -> /version=$v-SNAPSHOT/}, replacement: {v, p -> "\$1$v"}]
+        pre 'fileUpdate', [file: 'gradle.properties', pattern: {v,p -> /version=$v-SNAPSHOT/}, replacement: {v, p -> "$v"}]
         pre 'commit'
     }
 }
