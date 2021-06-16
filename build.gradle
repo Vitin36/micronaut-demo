@@ -90,6 +90,10 @@ tasks {
 scmVersion {
     ignoreUncommittedChanges = false
 
+    checks {
+        aheadOfRemote = false
+    }
+
     nextVersion {
         suffix = 'SNAPSHOT' // tag suffix
         separator = '-' // separator between version and suffix
