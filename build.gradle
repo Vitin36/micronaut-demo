@@ -4,7 +4,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "7.0.0"
     id("io.micronaut.application") version "1.5.0"
     id("org.jetbrains.kotlin.plugin.allopen") version "1.4.32"
-    id 'net.researchgate.release' version '2.8.1'
+    id('pl.allegro.tech.build.axion-release') version '1.13.2'
     id 'maven-publish'
 }
 
@@ -72,6 +72,33 @@ tasks {
             jvmTarget = "11"
         }
     }
+
+    task loadGitHubToken {
+        scmVersion.repository.customUsername = gitUsername
+        scmVersion.repository.customPassword = gitPassword
+    }
+
+    release {
+        dependsOn loadGitHubToken
+    }
+
+    markNextVersion {
+        dependsOn loadGitHubToken
+    }
+}
+
+scmVersion {
+    ignoreUncommittedChanges = false
+
+    nextVersion {
+        suffix = 'SNAPSHOT' // tag suffix
+        separator = '-' // separator between version and suffix
+    }
+
+//    hooks {
+//        pre 'fileUpdate', [file: 'README.md', pattern: {v,p -> /(version.) $v/}, replacement: {v, p -> "\$1 $v"}]
+//        pre 'commit'
+//    }
 }
 
 publishing {
@@ -91,45 +118,5 @@ publishing {
                 password System.env.CODEARTIFACT_AUTH_TOKEN
             }
         }
-    }
-}
-
-release {
-    failOnCommitNeeded = false
-    failOnPublishNeeded = true
-    failOnSnapshotDependencies = true
-    failOnUnversionedFiles = true
-    failOnUpdateNeeded = true
-    revertOnFail = true
-    preCommitText = ''
-    preTagCommitMessage = '[Gradle Release Plugin] - pre tag commit: '
-    tagCommitMessage = '[Gradle Release Plugin] - creating tag: '
-    newVersionCommitMessage = '[Gradle Release Plugin] - new version commit: '
-    tagTemplate = '${version}'
-    versionPropertyFile = 'gradle.properties'
-    versionProperties = []
-    snapshotSuffix = '-SNAPSHOT'
-    buildTasks = ['build']
-    ignoredSnapshotDependencies = []
-    pushReleaseVersionBranch = false
-    scmAdapters = [
-            net.researchgate.release.GitAdapter,
-            net.researchgate.release.SvnAdapter,
-            net.researchgate.release.HgAdapter,
-            net.researchgate.release.BzrAdapter
-    ]
-
-    git {
-        requireBranch = 'master'
-        pushToRemote = 'origin'
-        pushToBranchPrefix = 'release-'
-        commitVersionFileOnly = false
-        signTag = false
-    }
-
-    svn {
-        username = null
-        password = null
-        pinExternals = false   // allows to pin the externals when tagging, requires subversion client >= 1.9.0
     }
 }
