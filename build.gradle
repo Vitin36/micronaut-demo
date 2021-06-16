@@ -105,7 +105,7 @@ scmVersion {
                 pattern    : { v, p -> /version=$v-SNAPSHOT/ },
                 replacement: { v, p -> "version=$v-SNAPSHOT" }
         ]
-        pre 'commit'
+        pre 'commit', {v, p -> "Prepare for next version $v-SNAPSHOT"}
     }
 }
 
